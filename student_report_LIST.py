@@ -1,4 +1,5 @@
 # Sample data for students
+subjects = ["Math", "Science", "English"]
 students_data = [
     {"name": "Alice", "roll_no": 1, "marks": [85, 90, 88]},
     {"name": "Bob", "roll_no": 2, "marks": [78, 82, 80]},
@@ -18,12 +19,25 @@ def calculate_grade(marks):
     else:
         return 'A'
 
+# Function to get student details by name
+def get_student_info(name):
+    for student in students_data:
+        if student['name'].lower() == name.lower():
+            marks_info = ', '.join([f'{subject}: {mark}' for subject, mark in zip(subjects, student['marks'])])
+            grade = calculate_grade(student['marks'])
+            return f"Name: {student['name']}, Roll No: {student['roll_no']}, Marks: {marks_info}, Grade: {grade}"
+    return "Student not found."
+
 # Using list comprehension to create a list of formatted student details with grades
 formatted_students = [
-    f"Name: {student['name']}, Roll No: {student['roll_no']}, Marks: {student['marks']}, Grade: {calculate_grade(student['marks'])}"
+    f"Name: {student['name']}, Roll No: {student['roll_no']}, Marks: {', '.join([f'{subject}: {mark}' for subject, mark in zip(subjects, student['marks'])])}, Grade: {calculate_grade(student['marks'])}"
     for student in students_data
 ]
-
+# The list comprehension uses the zip function to pair each subject with its corresponding mark, ensuring the subjects are automatically included in the output.
 # Print the formatted student details
 for student in formatted_students:
     print(student)
+# Example usage of get_student_info function
+student_name = input("Enter the student's name: ")
+print(get_student_info(student_name))
+
